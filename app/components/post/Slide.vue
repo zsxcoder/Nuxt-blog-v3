@@ -36,7 +36,7 @@ useEventListener(carouselEl, 'wheel', (e) => {
 	</div>
 	<div ref="carouselEl" class="z-slide-body" dir="ltr">
 		<div class="slide-list">
-			<ZRawLink
+			<UtilLink
 				v-for="(article, index) in list"
 				:key="index"
 				class="slide-item"
@@ -48,9 +48,9 @@ useEventListener(carouselEl, 'wheel', (e) => {
 					<div class="title text-creative">
 						{{ article.title }}
 					</div>
-					<ZDate v-if="article.date" class="desc" :date="article.date" />
+					<UtilDate v-if="article.date" class="desc" :date="article.date" />
 				</div>
-			</ZRawLink>
+			</UtilLink>
 		</div>
 		<ZButton
 			class="carousel-action prev at-slide-hover"
@@ -72,7 +72,8 @@ useEventListener(carouselEl, 'wheel', (e) => {
 .z-slide {
 	margin: 1rem;
 
-	&:hover .at-slide-hover {
+	&:hover .at-slide-hover,
+	&:focus-within .at-slide-hover {
 		opacity: 1;
 	}
 }
@@ -170,7 +171,8 @@ useEventListener(carouselEl, 'wheel', (e) => {
 			}
 		}
 
-		&:hover > .info {
+		&:hover > .info,
+		&:focus-within > .info {
 			opacity: 1;
 		}
 	}

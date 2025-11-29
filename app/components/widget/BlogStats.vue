@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { UtilDate } from '#components'
-import { toZonedTime } from 'date-fns-tz'
 
 const appConfig = useAppConfig()
 const runtimeConfig = useRuntimeConfig()

@@ -16,17 +16,17 @@ onMounted(() => {
 
 <template>
 <NuxtLoadingIndicator />
-<SkipToContent />
-<ZSidebar />
+<BlogSkipToContent />
+<BlogSidebar />
 <div id="content">
 	<main id="main-content">
 		<NuxtPage />
-		<ZFooter />
+		<BlogFooter />
 	</main>
-	<ZAside />
+	<BlogAside />
 </div>
-<ZPanel />
-<ZPopover />
+<BlogPanel />
+<BlogPopover />
 
 <!-- 音乐播放器 - 使用原生HTML确保正确初始化 -->
 <ClientOnly>
@@ -44,25 +44,22 @@ onMounted(() => {
 </template>
 
 <!-- eslint-disable-next-line vue/enforce-style-attribute -->
-<style lang="scss">
-// Nuxt 根元素 id
-#z-root {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  min-width: 0;
+<style lang="scss" scoped>
+:global(#z-root) {
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+	min-width: 0;
 }
 
-// 合并处理 #z-sidebar, #z-aside
-aside {
-  flex-shrink: 0;
-  position: sticky;
-  top: 0;
-  width: 280px;
-  height: 100vh;
-  height: 100dvh;
-  scrollbar-width: thin;
-
+:global(.blog-sidebar), :global(.blog-aside) {
+	flex-shrink: 0;
+	position: sticky;
+	top: 0;
+	width: 280px;
+	height: 100vh;
+	height: 100dvh;
+	scrollbar-width: thin;
   @media (max-width: $breakpoint-widescreen) {
     flex-shrink: 0.2;
   }
@@ -75,10 +72,16 @@ aside {
   width: $breakpoint-widescreen;
   min-width: 0;
 
-  > main {
-    flex-grow: 1;
-    min-width: 0;
-  }
+	// 此处不建议给内容设置 padding
+	> #main-content {
+		flex-grow: 1; // 使较小宽度的内容占满
+
+		// overflow: hidden; // 会使一部分元素吸顶失效
+
+		// 使内容正确计算宽度而不横向溢出
+		// 也可设置 width: 0 或者 contain: inline-size（兼容性不佳）
+		min-width: 0;
+	}
 }
 
 // 音乐播放器样式调整

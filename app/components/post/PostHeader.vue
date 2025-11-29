@@ -31,7 +31,7 @@ const { copy, copied } = useCopy(shareText)
 		</div>
 
 		<div v-if="!meta?.hideInfo" class="post-info">
-			<ZDate
+			<UtilDate
 				v-if="date"
 				v-tip
 				tip-prefix="创建于"
@@ -39,7 +39,7 @@ const { copy, copied } = useCopy(shareText)
 				icon="ph:calendar-dots-bold"
 			/>
 
-			<ZDate
+			<UtilDate
 				v-if="updated && isTimeDiffSignificant(date, updated, .999)"
 				v-tip
 				tip-prefix="修改于"
@@ -81,7 +81,8 @@ const { copy, copied } = useCopy(shareText)
 		border-radius: 0;
 	}
 
-	&:hover .operations {
+	&:hover .operations,
+	&:focus-within .operations {
 		opacity: 1;
 	}
 
