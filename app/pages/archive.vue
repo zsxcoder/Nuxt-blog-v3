@@ -1,44 +1,36 @@
 <script setup lang="ts">
-import type { WidgetName } from '~/composables/useWidgets'
 import { onClickOutside } from '@vueuse/core'
 import { group } from 'radash'
-import { computed, watch } from 'vue'
-import { getCategoryIcon, getTagIcon, useArticleFilter } from '~/composables/useArticle'
+import { useArticleFilter } from '~/composables/useArticle'
 
 const appConfig = useAppConfig()
 useSeoMeta({
 	title: '归档',
 	description: `${appConfig.title}的所有文章归档。`,
 })
-const birthYear = appConfig.stats.birthYear
+const birthYear = appConfig.component.stats.birthYear
 
 const layoutStore = useLayoutStore()
+layoutStore.setAside(['blog-stats', 'blog-log', 'latest-comments', 'comm-group', 'poetry'])
 
-// 根据配置决定是否显示侧边栏图片
-const asideWidgets = computed<WidgetName[]>(() => {
-	const widgets: WidgetName[] = ['blog-stats', 'announcement-card']
+const listRaw = useArticleIndexOptions() // 默认查询 posts/%
 
-	// 如果启用了侧边栏图片，在公告后添加图片组件
-	if (appConfig.sidebarImage?.enabled) {
-		// 在 'announcement-card' 后插入 'sidebar-image'
-		const announcementIndex = widgets.indexOf('announcement-card')
-		if (announcementIndex !== -1) {
-			widgets.splice(announcementIndex + 1, 0, 'sidebar-image')
-		}
-	}
-
-	return widgets
-})
-
-watch(asideWidgets, (newWidgets) => {
-	layoutStore.setAside(newWidgets)
-}, { immediate: true })
-
-const { data: listRaw } = await useArticleIndex()
 const { category, categories, tag, tags, listFiltered } = useArticleFilter(listRaw, {
 	categoryBindQuery: 'category',
 	tagBindQuery: 'tag',
 })
+
+// 获取分类图标
+function getCategoryIcon(category?: string) {
+	const appConfig = useAppConfig()
+	return appConfig.article.categories[category!]?.icon ?? 'ph:folder-bold'
+}
+
+// 获取标签图标
+function getTagIcon(tag?: string) {
+	const appConfig = useAppConfig()
+	return appConfig.article.tags[tag!]?.icon ?? 'ph:tag-bold'
+}
 
 const listGrouped = computed(() => {
 	if (!listFiltered.value)
@@ -346,7 +338,7 @@ onClickOutside(tagDropdownRef, () => {
 						</h3>
 						<menu class="archive-list">
 							<TransitionGroup appear name="float-in">
-								<ZArchive
+								<PostArchive
 									v-for="article, index in monthGroup.articles"
 									:key="article.path"
 									v-bind="article"
@@ -368,7 +360,7 @@ onClickOutside(tagDropdownRef, () => {
 	padding: 1rem;
 	max-width: 1200px;
 	margin: 0 auto;
-	min-height: 90vh; /* 确保最小高度铺满整个视口高度 */
+	min-height: 90vh;
 	display: flex;
 	flex-direction: column;
 }
@@ -849,7 +841,7 @@ onClickOutside(tagDropdownRef, () => {
 	margin-top: 0.25rem;
 	overflow: hidden;
 	z-index: 1000;
-	min-width: 120px; /* 确保下拉框有足够宽度 */
+	min-width: 120px;
 }
 
 .dropdown-item {

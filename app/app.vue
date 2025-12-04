@@ -16,6 +16,7 @@ onMounted(() => {
 
 <template>
 <NuxtLoadingIndicator />
+<NuxtRouteAnnouncer :style="{ position: 'absolute' }" />
 <BlogSkipToContent />
 <BlogSidebar />
 <div id="content">
@@ -44,15 +45,15 @@ onMounted(() => {
 </template>
 
 <!-- eslint-disable-next-line vue/enforce-style-attribute -->
-<style lang="scss" scoped>
-:global(#z-root) {
+<style lang="scss">
+#z-root {
 	display: flex;
 	justify-content: center;
 	gap: 1rem;
 	min-width: 0;
 }
 
-:global(.blog-sidebar), :global(.blog-aside) {
+#blog-sidebar, #blog-aside {
 	flex-shrink: 0;
 	position: sticky;
 	top: 0;

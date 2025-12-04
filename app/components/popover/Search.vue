@@ -5,22 +5,28 @@ const props = defineProps<{
 	show?: boolean
 }>()
 
-// await 会阻塞渲染
-const { data, status } = useAsyncData(
+const appConfig = useAppConfig()
+const segmenter = Intl.Segmenter && new Intl.Segmenter(appConfig.language, { granularity: 'word' })
+
+// await useAsyncData() 会阻塞渲染
+const { data, status } = await useLazyAsyncData(
 	'search',
 	() => queryCollectionSearchSections('content', {
 		ignoredTags: ['pre'],
 	}),
 )
 
-// TODO: 优化中文分词逻辑
 const miniSearch = new MiniSearch({
 	fields: ['title', 'content'],
 	storeFields: ['title', 'titles', 'content', 'level'],
 	searchOptions: {
 		prefix: true,
 		fuzzy: 0.2,
+		combineWith: 'AND',
 	},
+	processTerm: Intl.Segmenter
+		? term => Array.from(segmenter.segment(term)).map(seg => seg.segment)
+		: undefined,
 })
 
 const searchStore = useSearchStore()
@@ -147,7 +153,7 @@ function openActiveItem() {
 	flex-direction: column;
 	position: fixed;
 	inset: 0;
-	width: 95%;
+	width: 90%;
 	height: fit-content;
 	max-width: $breakpoint-mobile;
 	max-height: 80%;
