@@ -51,7 +51,7 @@ export default defineAppConfig({
 		iconNav: [
 			{ icon: 'ph:house-bold', text: '个人主页', url: blogConfig.author.homepage },
 			{ icon: 'ri:qq-line', text: '交流群: 169994096', url: 'https://jq.qq.com/?_wv=1027&k=lQfNSeEd' },
-			{ icon: 'ph:github-logo-bold', text: 'GitHub: L33Z22L11', url: 'https://github.com/L33Z22L11' },
+			{ icon: 'ph:github-logo-bold', text: 'GitHub: mcyzsx', url: 'https://github.com/mcyzsx' },
 			{ icon: 'ph:rss-simple-bold', text: 'Atom订阅', url: '/atom.xml' },
 			{ icon: 'ph:subway-bold', text: '开往', url: 'https://www.travellings.cn/' },
 		] satisfies NavItem[],
@@ -99,7 +99,11 @@ export default defineAppConfig({
 			items: [
 				{ icon: 'ph:files-bold', text: '文章', url: '/' },
 				{ icon: 'ph:link-bold', text: '友链', url: '/link' },
+				{ icon: 'mdi:wechat', text: '朋友圈', url: '/fcircle' },
 				{ icon: 'ph:archive-bold', text: '归档', url: '/archive' },
+				{ icon: 'mdi:pen', text: '日记', url: '/moment' },
+				{ icon: 'mdi:book', text: 'Ech0', url: '/essays' },
+				{ icon: 'ph:devices-bold', text: '装备', url: '/devices' },
 			],
 		},
 	] satisfies Nav,

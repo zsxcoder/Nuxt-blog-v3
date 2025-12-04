@@ -11,7 +11,7 @@ const layoutStore = useLayoutStore()
 
 // 根据配置决定是否显示侧边栏图片
 const asideWidgets = computed<WidgetName[]>(() => {
-	const widgets: WidgetName[] = ['blog-stats', 'announcement-card']
+	const widgets: WidgetName[] = ['blog-stats', 'latest-comments', 'comm-group', 'poetry']
 
 	// 如果启用了侧边栏图片，在公告后添加图片组件
 	if (appConfig.sidebarImage?.enabled) {

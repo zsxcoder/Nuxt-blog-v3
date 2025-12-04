@@ -12,7 +12,7 @@ const basicConfig = {
 	},
 	author: {
 		name: '钟神秀',
-		avatar: 'https://cn.cravatar.com/avatar/56cd72b5460ecaa08ddffea9562f5629',
+		avatar: 'https://gravatar.mcyzsx.top/avatar/me',
 		email: 'me@mcyzsx.top',
 		homepage: 'https://www.mcyzsx.top/',
 	},
@@ -106,12 +106,14 @@ const blogConfig = {
 			src: '/js/netease-mini-player-v2.js',
 			defer: true,
 		},
+		{ src: 'https://sdk.jinrishici.com/v2/browser/jinrishici.js', defer: true },
 	],
 	/** 自己部署的 Twikoo 服务 */
 	twikoo: {
-		envId: 'https://twikoo.zhilu.cyou/',
-		preload: 'https://twikoo.zhilu.cyou/',
+		envId: 'https://twikoo-ryu.mcyzsx.top/',
+		preload: 'https://twikoo-ryu.mcyzsx.top/',
 	},
+
 }
 
 /** 用于生成 OPML 和友链页面配置 */

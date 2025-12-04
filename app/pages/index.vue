@@ -9,14 +9,20 @@ useSeoMeta({
 })
 
 const layoutStore = useLayoutStore()
-layoutStore.setAside(['blog-stats', 'announcement-card', 'blog-tech', 'comm-group'])
+layoutStore.setAside(['blog-stats', 'blog-tech', 'announcement-card', 'work-status', 'latest-comments', 'comm-group', 'poetry'])
 
-const { data: listRaw } = await useAsyncData('index_posts', () => useArticleIndexOptions(), { default: () => [] })
-const { listSorted, isAscending, sortOrder } = useArticleSort(listRaw, { bindDirectionQuery: 'asc', bindOrderQuery: 'sort' })
+const listRaw = useArticleIndexOptions() // 默认查询 posts/%
+
+const { listSorted, isAscending, sortOrder } = useArticleSort(listRaw, {
+	bindDirectionQuery: 'asc',
+	bindOrderQuery: 'sort',
+})
+
 const { category, categories, tag, tags, listFiltered } = useArticleFilter(listSorted, {
 	categoryBindQuery: 'category',
 	tagBindQuery: 'tag',
 })
+
 const { page, totalPages, listPaged } = usePagination(listFiltered, { bindQuery: 'page' })
 
 watch([category, tag], () => {
@@ -36,7 +42,7 @@ const listRecommended = computed(() => sort(
 <BlogHeader class="mobile-only" to="/" tag="h1" />
 
 <UtilHydrateSafe>
-	<PostSlide v-if="listRecommended.length && page === 1 && !category" :list="listRecommended" />
+	<PostSlide v-if="listRecommended.length && page === 1 && !category && !tag" :list="listRecommended" />
 
 	<div class="post-list">
 		<div class="toolbar">
