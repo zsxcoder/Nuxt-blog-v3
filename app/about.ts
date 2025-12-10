@@ -163,7 +163,7 @@ export const about: aboutConnect[] = [
 		}],
 		single: [{
 			tip: '建站历程',
-			title: '魔改建站教程',
+			title: '魔改建站记录',
 			lishi: '『ZSXの小站』的魔改进程',
 			content: '『ZSXの小站』的魔改记录',
 		}],

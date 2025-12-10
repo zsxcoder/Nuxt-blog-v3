@@ -44,6 +44,7 @@ interface UmamiStatsResponse {
   yesterday_pv: number | null
   last_month_pv: number | null
   last_year_pv: number | null
+  online_users: number | null
 }
 
 const umamiStats = ref<UmamiStatsResponse | null>(null)
@@ -155,6 +156,9 @@ function refreshFeeds() {
         </span>
         <span class="footer-stats-item">
           UV {{ umamiStats.today_uv ?? '—' }}
+        </span>
+        <span v-if="umamiStats.online_users != null" class="footer-stats-item">
+          在线 {{ umamiStats.online_users }}
         </span>
       </div>
     </div>

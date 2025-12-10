@@ -75,7 +75,12 @@
         <Game />
       </div>
 
-      <!-- 第 6 行：单曲 -->
+      <!-- 第 6 行：站点统计 -->
+      <div class="author-content">
+        <Umami />
+      </div>
+
+      <!-- 第 7 行：单曲 -->
       <div class="author-content">
         <Single />
       </div>
@@ -90,6 +95,7 @@ import Author from '~/components/about/author.vue'
 import Game from '~/components/about/game.vue'
 import Maxim from '~/components/about/maxim.vue'
 import MyInfoAndSayHello from '~/components/about/myInfoAndSayHello.vue'
+import Umami from '~/components/about/umami.vue'
 import Single from '~/components/about/single.vue'
 import Skillinfo from '~/components/about/skillinfo.vue'
 import Technology from '~/components/about/technology.vue'

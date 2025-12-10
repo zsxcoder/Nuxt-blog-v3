@@ -50,7 +50,7 @@ export default defineAppConfig({
 		/** 侧边栏底部图标导航 */
 		iconNav: [
 			{ icon: 'ph:house-bold', text: '个人主页', url: blogConfig.author.homepage },
-			{ icon: 'ri:qq-line', text: '交流群: 169994096', url: 'https://jq.qq.com/?_wv=1027&k=lQfNSeEd' },
+			{ icon: 'ri:qq-line', text: 'TG账号', url: 'https://t.me/KemiaoJun' },
 			{ icon: 'ph:github-logo-bold', text: 'GitHub: mcyzsx', url: 'https://github.com/mcyzsx' },
 			{ icon: 'ph:rss-simple-bold', text: 'Atom订阅', url: '/atom.xml' },
 			{ icon: 'ph:subway-bold', text: '开往', url: 'https://www.travellings.cn/' },
@@ -68,7 +68,7 @@ export default defineAppConfig({
 				title: '社交',
 				items: [
 					{ icon: 'ph:github-logo-bold', text: 'mcyzsx', url: 'https://github.com/mcyzsx' },
-					{ icon: 'ri:qq-line', text: '群: 169994096', url: 'https://qm.qq.com/q/Ha1GZQtMgE' },
+					{ icon: 'ri:qq-line', text: 'Q: 3149261770', url: 'https://qm.qq.com/q/Ha1GZQtMgE' },
 					{ icon: 'ph:envelope-simple-bold', text: blogConfig.author.email, url: `mailto:${blogConfig.author.email}` },
 				],
 			},
@@ -90,7 +90,7 @@ export default defineAppConfig({
 		showTitle: true,
 		subtitle: blogConfig.subtitle,
 		emojiTail: ['📄', '🦌', '🙌', '🐟', '🏖️'],
-		avatarFrame: '/image/touxiangkuang.png',
+		avatarFrame: '/image/kuang.avif',
 	},
 
 	/** 友链页面 */
@@ -131,7 +131,7 @@ export default defineAppConfig({
 
 	analytics: {
 		/** Umami 统计数据接口（例如 Cloudflare Worker 提供的聚合 JSON 地址） */
-		umamiStatsApi: '',
+		umamiStatsApi: 'https://umami-blog-v3.mcyzsx.top/',
 	},
 
 	pagination: {
