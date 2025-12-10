@@ -65,6 +65,8 @@ const blogConfig = {
 			音乐播放器: { icon: 'mdi:music-circle-outline', color: '#E91E63' }, // 粉色 - 音乐播放器品牌色
 			网站推荐: { icon: 'mdi:web', color: '#FF5722' }, // 深橙色 - 网站推荐品牌色
 			博客: { icon: 'fa7-solid:blog', color: '#673AB7' }, // 深紫色 - 博客品牌色
+			网站统计: { icon: 'mdi:chart-bar', color: '#00BCD4' }, // 蓝绿色 - 网站统计品牌色
+			其他: { icon: 'mdi:file-document-box', color: '#FFEB3B' }, // 黄色 - 其他品牌色
 		},
 		/** 文章版式，首个为默认版式 */
 		types: {
@@ -96,7 +98,7 @@ const blogConfig = {
 	/** 向 <head> 中添加脚本 */
 	scripts: [
 		// 自己部署的 Umami 统计服务
-		// { 'src': 'https://zhi.zhilu.cyou/zhi.js', 'data-website-id': 'a1997c81-a42b-46f6-8d1d-8fbd67a8ef41', 'defer': true },
+		{ 'src': 'https://umami.mcyzsx.top/script.js', '': '1a7a697c-32ef-47c9-a687-3e443c75c579', 'defer': true },
 		// 自己网站的 Cloudflare Insights 统计服务
 		// { 'src': 'https://static.cloudflareinsights.com/beacon.min.js', 'data-cf-beacon': '{"token": "97a4fe32ed8240ac8284e9bffaf03962"}', 'defer': true },
 		// Twikoo 评论系统
@@ -106,6 +108,7 @@ const blogConfig = {
 			defer: true,
 		},
 		{ src: 'https://sdk.jinrishici.com/v2/browser/jinrishici.js', defer: true },
+		{ 'src': 'https://han.zsx815.top/tracker.min.js', 'data-website-id': 'blog-v3', 'defer': true },
 	],
 	/** 自己部署的 Twikoo 服务 */
 	twikoo: {
@@ -127,7 +130,7 @@ export const myFeed: FeedEntry = {
 	avatar: blogConfig.author.avatar,
 	archs: ['Nuxt', 'Vercel'],
 	date: blogConfig.timeEstablished,
-	comment: '这是我自己',
+	// comment: '这是我自己',
 }
 
 export default blogConfig

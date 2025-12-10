@@ -37,6 +37,39 @@ async function fetchHitokoto() {
 initializeRandomFeeds()
 fetchHitokoto()
 
+interface UmamiStatsResponse {
+  today_uv: number | null
+  today_pv: number | null
+  yesterday_uv: number | null
+  yesterday_pv: number | null
+  last_month_pv: number | null
+  last_year_pv: number | null
+}
+
+const umamiStats = ref<UmamiStatsResponse | null>(null)
+
+async function fetchUmamiStats() {
+  const url = (appConfig as any).analytics?.umamiStatsApi as string | undefined
+
+  if (!import.meta.client || !url)
+    return
+
+  try {
+    const res = await fetch(url)
+    if (!res.ok)
+      throw new Error(`Failed to fetch Umami stats: ${res.status}`)
+
+    umamiStats.value = await res.json()
+  }
+  catch (error) {
+    console.error('Failed to load Umami stats:', error)
+  }
+}
+
+onMounted(() => {
+  fetchUmamiStats()
+})
+
 /* 刷新友链 */
 function refreshFeeds() {
   initializeRandomFeeds()
@@ -115,6 +148,15 @@ function refreshFeeds() {
         />
         <span class="title">{{ appConfig.title }}</span>
       </a>
+      <div v-if="umamiStats" class="footer-stats">
+        <Icon name="material-symbols:insights" />
+        <span class="footer-stats-item">
+          今日 PV {{ umamiStats.today_pv ?? '—' }}
+        </span>
+        <span class="footer-stats-item">
+          UV {{ umamiStats.today_uv ?? '—' }}
+        </span>
+      </div>
     </div>
     <div class="theme-line">
       <span>采用</span>
@@ -234,6 +276,24 @@ function refreshFeeds() {
   @keyframes fade-in {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+
+  .footer-stats {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-size: 0.85em;
+    color: var(--c-text-3);
+  }
+
+  .footer-stats-item + .footer-stats-item {
+    margin-left: 0.3em;
+  }
+
+  .footer-stats :deep(svg) {
+    font-size: 1rem;
+    color: var(--c-primary);
   }
 }
 </style>

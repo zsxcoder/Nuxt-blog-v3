@@ -5,14 +5,16 @@ const props = defineProps<{
 }>()
 
 const icon = computed(() => props.icon || getDomainIcon(props.href))
+const isExternal = computed(() => isExtLink(props.href))
+const resolvedHref = computed(() => (isExternal.value ? `/go?url=${encodeURIComponent(props.href)}` : props.href))
 const tip = computed(() => ({
-	content: isExtLink(props.href) ? getDomain(props.href) : decodeURIComponent(props.href),
+	content: isExternal.value ? getDomain(props.href) : decodeURIComponent(props.href),
 	inlinePositioning: true,
 }))
 </script>
 
 <template>
-<UtilLink v-tip="tip" class="z-link" :to="href">
+<UtilLink v-tip="tip" class="z-link" :to="resolvedHref">
 	<Icon v-if="icon" class="domain-icon" :name="icon" />
 	<slot />
 </UtilLink>

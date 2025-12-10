@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 // 动态接收友链数据
 const props = defineProps({
@@ -44,16 +44,110 @@ const props = defineProps({
 // 控制二维码模态框显示
 const showQrcodeModal = ref(false)
 
-// 跳转到友链网站
-function navigateToSite() {
-	if (props.siteUrl) {
-		window.open(props.siteUrl, '_blank')
+const latencyText = ref('')
+const latencyClass = ref('')
+
+const STATUS_CACHE_KEY = 'flinkStatusData'
+const STATUS_CACHE_TTL = 30 * 60 * 1000 // 半小时
+const STATUS_JSON_URL = 'https://check-flink.mcyzsx.top/result.json'
+
+function normalizeLink(link) {
+	try {
+		const url = new URL(link)
+		const normalized = `${url.origin}${url.pathname}`.replace(/\/$/, '')
+		return normalized
+	}
+	catch {
+		return link.replace(/\/$/, '')
 	}
 }
+
+async function loadFlinkStatusData() {
+	try {
+		const cachedRaw = localStorage.getItem(STATUS_CACHE_KEY)
+		if (cachedRaw) {
+			const cached = JSON.parse(cachedRaw)
+			if (cached && cached.timestamp && (Date.now() - cached.timestamp) < STATUS_CACHE_TTL)
+				return cached.data
+		}
+
+		const res = await fetch(STATUS_JSON_URL)
+		if (!res.ok)
+			throw new Error(`Failed to fetch flink status: ${res.status}`)
+
+		const data = await res.json()
+		localStorage.setItem(STATUS_CACHE_KEY, JSON.stringify({
+			data,
+			timestamp: Date.now(),
+		}))
+		return data
+	}
+	catch (error) {
+		console.error('Error loading flink status:', error)
+		return null
+	}
+}
+
+// 跳转到友链网站（经过 /go 中转页）
+function navigateToSite() {
+	if (!props.siteUrl)
+		return
+
+	const target = `/go?url=${encodeURIComponent(props.siteUrl)}`
+	window.open(target, '_blank')
+}
+
+onMounted(async () => {
+	if (!props.siteUrl)
+		return
+
+	const data = await loadFlinkStatusData()
+	if (!data || !Array.isArray(data.link_status))
+		return
+
+	const targetLink = normalizeLink(props.siteUrl)
+	const status = data.link_status.find(item => normalizeLink(item.link) === targetLink)
+
+	if (!status)
+		return
+
+	const rawLatency = typeof status.latency === 'number' ? status.latency : Number(status.latency)
+
+	if (Number.isNaN(rawLatency)) {
+		latencyText.value = '未知'
+		latencyClass.value = 'status-tag-red'
+		return
+	}
+
+	const latency = rawLatency
+
+	if (latency === -1) {
+		latencyText.value = '未知'
+		latencyClass.value = 'status-tag-red'
+	}
+	else {
+		latencyText.value = `${latency.toFixed(2)} s`
+		if (latency <= 2)
+			latencyClass.value = 'status-tag-green'
+		else if (latency <= 5)
+			latencyClass.value = 'status-tag-light-yellow'
+		else if (latency <= 10)
+			latencyClass.value = 'status-tag-dark-yellow'
+		else
+			latencyClass.value = 'status-tag-red'
+	}
+})
 </script>
 
 <template>
 <div class="friend-link-card">
+	<div
+		v-if="latencyText"
+		class="status-tag"
+		:class="latencyClass"
+	>
+		{{ latencyText }}
+	</div>
 	<!-- 卡片内部孔洞效果 -->
 	<div class="card-punch-hole" />
 
@@ -589,5 +683,41 @@ html.dark .friend-link-card .modal-close {
 
 html.dark .friend-link-card .modal-close:hover {
   background: var(--c-bg-1) !important;
+}
+
+/* 友链状态标签样式 */
+.status-tag {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 3px 8px;
+  border-radius: 12px 0 12px 0;
+  font-size: 12px;
+  color: #ffffff;
+  font-weight: bold;
+  transition: font-size 0.3s ease-out, width 0.3s ease-out, opacity 0.3s ease-out;
+  z-index: 30;
+}
+
+.friend-link-card:hover .status-tag {
+  font-size: 0;
+  opacity: 0;
+}
+
+/* 固态颜色 */
+.status-tag-green {
+  background-color: #005E00;
+}
+
+.status-tag-light-yellow {
+  background-color: #FED101;
+}
+
+.status-tag-dark-yellow {
+  background-color: #F0B606;
+}
+
+.status-tag-red {
+  background-color: #B90000;
 }
 </style>

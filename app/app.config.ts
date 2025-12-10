@@ -128,6 +128,11 @@ export default defineAppConfig({
 		Themes_Version: `${version}`,
 	},
 
+	analytics: {
+		/** Umami 统计数据接口（例如 Cloudflare Worker 提供的聚合 JSON 地址） */
+		umamiStatsApi: '',
+	},
+
 	pagination: {
 		perPage: 10,
 		/** 默认排序方式，需要是 this.article.order 中的键名 */

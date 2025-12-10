@@ -12,17 +12,23 @@ export interface FeedEntry {
 	/** 订阅源 */
 	feed?: string
 	/** 站点小图标 */
-	icon: string
+	icon?: string
 	/** 个人头像 */
 	avatar: string
 	/** 博客技术架构 */
 	archs?: Arch[]
 	/** 订阅日期 */
 	date: string
-	/** 博主备注 */
-	comment?: string
 	/** 错误信息 */
 	error?: string
+	/** 标签 */
+	tags?: string[]
+	/** 是否为上游友链 */
+	upstream?: boolean
+	/** 二维码图片链接 */
+	qrcode?: string
+	/** 是否为推荐友链 */
+	recommend?: boolean
 }
 
 export interface FeedGroup {

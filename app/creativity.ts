@@ -21,12 +21,12 @@ export const creativityData: CreativityData[] = [
 			{
 				name: 'Vue',
 				color: '#b8f0ae',
-				icon: 'https://www.myxz.top/banners/vue.webp',
+				icon: 'https://cdn.jsdelivr.net/gh/mcyzsx/picx-images-hosting@master/custom/Vue.3uvait8kyx.webp',
 			},
 			{
 				name: 'Java',
 				color: '#fff',
-				icon: 'https://www.myxz.top/banners/Java.webp',
+				icon: 'https://cdn.jsdelivr.net/gh/mcyzsx/picx-images-hosting@master/custom/java.5c1fkkttn4.webp',
 			},
 			{
 				name: 'Nuxt',
@@ -51,7 +51,7 @@ export const creativityData: CreativityData[] = [
 			{
 				name: 'Node',
 				color: '#333',
-				icon: 'https://www.myxz.top/banners/node-logo.svg',
+				icon: 'https://cdn.jsdelivr.net/gh/mcyzsx/picx-images-hosting@master/custom/Nodejs.7pqvb9wtd.webp',
 			},
 			{
 				name: 'Git',
