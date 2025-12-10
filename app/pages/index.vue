@@ -12,7 +12,16 @@ useSeoMeta({
 const layoutStore = useLayoutStore()
 layoutStore.setAside(['blog-stats', 'blog-tech', 'announcement-card', 'work-status', 'latest-comments', 'comm-group', 'history-today', 'poetry'])
 
-const listRaw = useArticleIndexOptions() // Readonly<Ref<...>>
+const articleIndexPath = 'posts/%'
+const articleIndexKey = `idx_${articleIndexPath.replace(/[^a-z0-9]/gi, '_')}`
+
+const { data: listRawData } = await useAsyncData<ArticleProps[]>(
+	articleIndexKey,
+	() => useArticleIndexOptions(articleIndexPath),
+	{ default: () => [] },
+)
+
+const listRaw = computed<ArticleProps[]>(() => listRawData.value || [])
 
 // 2. 包成普通的 ComputedRef<ArticleProps[]>
 const listNormalized = computed<ArticleProps[]>(() => {

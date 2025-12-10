@@ -16,7 +16,16 @@ const layoutStore = useLayoutStore()
 layoutStore.setAside(['blog-stats', 'blog-log', 'latest-comments', 'comm-group', 'poetry']) // 你的文章类型声明路径
 
 // 1. 取原始数据
-const listRaw = useArticleIndexOptions() // Readonly<Ref<…>>
+const articleIndexPath = 'posts/%'
+const articleIndexKey = `idx_${articleIndexPath.replace(/[^a-z0-9]/gi, '_')}`
+
+const { data: listRawData } = await useAsyncData<ArticleProps[]>(
+	articleIndexKey,
+	() => useArticleIndexOptions(articleIndexPath),
+	{ default: () => [] },
+)
+
+const listRaw = computed<ArticleProps[]>(() => listRawData.value || [])
 
 // 2. 包成 ComputedRef<ArticleProps[]>
 const listNormalized = computed<ArticleProps[]>(() => {

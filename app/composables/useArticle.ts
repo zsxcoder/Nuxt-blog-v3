@@ -2,20 +2,31 @@ import type ArticleProps from '~/types/article'
 import type { ArticleOrderType } from '~/types/article'
 import { alphabetical } from 'radash'
 
-/* 1. 仅内部拉数据，外部永远拿到「纯数组」 */
-// composables/useArticle.ts
+/**
+ * 生成文章查询参数，完全包装 useAsyncData 会使 SSR 行为异常，缓存 key 需要暴露
+ * @see https://nuxt.com/docs/4.x/api/composables/use-async-data#usage
+ * @see https://github.com/nuxt/nuxt/issues/14736
+ * @todo 支持分页/分类筛选
+ */
 export function useArticleIndexOptions(path = 'posts/%') {
-	const { data } = useAsyncData<ArticleProps[]>(
-		`idx_${path.replace(/[^a-z0-9]/gi, '_')}`,
-		() => queryCollection('content')
-			.where('stem', 'LIKE', path)
-			.select('categories', 'date', 'description', 'image', 'path', 'readingTime', 'recommend', 'title', 'type', 'updated', 'tags')
-			.all() as Promise<ArticleProps[]>,
-		{ default: () => [] },
-	)
-	// ❌ 不再包 readonly，直接返回 Ref<ArticleProps[]>
-	return data as Ref<ArticleProps[]>
+	return queryCollection('content')
+		.where('stem', 'LIKE', path)
+		.select(
+			'categories',
+			'date',
+			'description',
+			'image',
+			'path',
+			'readingTime',
+			'recommend',
+			'title',
+			'type',
+			'updated',
+			'tags',
+		)
+		.all() as Promise<ArticleProps[]>
 }
+
 
 /* 2. 分类 & 标签 & 排序 & 过滤器 保持原有逻辑即可 */
 interface UseCategoryOptions { bindQuery?: string | false }

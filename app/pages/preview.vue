@@ -10,8 +10,16 @@ useSeoMeta({
 const layoutStore = useLayoutStore()
 layoutStore.setAside(['blog-log'])
 
-// ✅ 直接拿 Ref，不再包 useAsyncData
-const listRaw = useArticleIndexOptions('previews/%')
+const previewIndexPath = 'previews/%'
+const previewIndexKey = `idx_${previewIndexPath.replace(/[^a-z0-9]/gi, '_')}`
+
+const { data: listRawData } = await useAsyncData<ArticleProps[]>(
+	previewIndexKey,
+	() => useArticleIndexOptions(previewIndexPath),
+	{ default: () => [] },
+)
+
+const listRaw = computed<ArticleProps[]>(() => listRawData.value || [])
 
 const { listSorted, isAscending, sortOrder } = useArticleSort(listRaw)
 const { category, categories, tag, tags, listFiltered } = useArticleFilter(listSorted)
