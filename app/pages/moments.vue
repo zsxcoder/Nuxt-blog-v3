@@ -22,8 +22,8 @@ useSeoMeta({
 
 // API 配置常量
 const API_CONFIG = {
-	MEMO_API: 'https://moment-api.mcyzsx.top/api/memo/list',
-	USER_API: 'https://moment-api.mcyzsx.top/api/user/profile',
+	MEMO_API: '/api/memo/list',
+	USER_API: '/api/user/profile',
 	PAGE_SIZE: 30,
 }
 // ---------- 新增：用户信息状态管理 ----------
@@ -44,16 +44,10 @@ async function fetchUserProfile() {
 		userState.value.loading = true
 		userState.value.error = false
 
-		const response = await fetch(API_CONFIG.USER_API, {
+		const data = await $fetch<{ code: number; data?: UserProfile }>(API_CONFIG.USER_API, {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({}), // 按需补充请求体参数
+			body: {},
 		})
-
-		if (!response.ok)
-			throw new Error(`HTTP错误：${response.status}`)
-
-		const data = await response.json()
 		if (data.code === 0 && data.data) {
 			userState.value.data = data.data as UserProfile
 		}
@@ -249,14 +243,10 @@ async function fetchTalks() {
 	try {
 		talksState.value.loading = true
 		talksState.value.error = false
-		const response = await fetch(API_CONFIG.MEMO_API, {
+		const data = await $fetch<{ code: number; data?: { list?: any[] } }>(API_CONFIG.MEMO_API, {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ size: API_CONFIG.PAGE_SIZE }),
+			body: { size: API_CONFIG.PAGE_SIZE },
 		})
-		if (!response.ok)
-			throw new Error(`HTTP error! status: ${response.status}`)
-		const data = await response.json()
 		if (data.code === 0 && data.data?.list) {
 			const formattedTalks = data.data.list.map((item: any) => ({
 				content: formatContent(item),
@@ -296,7 +286,7 @@ async function goComment(content: string) {
 	// 1. 滚动到评论区
 	twikooEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
 
-	// 2. 如果有“展开评论”按钮，先点它
+	// 2. 如果有"展开评论"按钮，先点它
 	const expandBtn = twikooEl.querySelector('.tk-expand') as HTMLElement
 	if (expandBtn) expandBtn.click()
 
@@ -334,6 +324,12 @@ function searchLocation(location: string) {
 }
 
 const yearlyTip = computed(() => talks)
+
+const showComment = ref(false)
+
+function showCommentSection() {
+	showComment.value = true
+}
 </script>
 
 <template>
@@ -453,15 +449,14 @@ const yearlyTip = computed(() => talks)
 						<div class="talk-content">
 							<div class="talk_content_text" v-html="item.content.text" />
 
-							<div v-if="item.content.music">
-								<link src="https://jsd.myxz.top/npm/aplayer/dist/APlayer.min.css" rel="stylesheet">
-								<meting-js
-									v-if="item.music.type === 'tencent'"
-									:id="item.content.music.id"
-									:server="item.content.music.server"
-									:api="item.content.music.api"
-								/>
-							</div>
+						<div v-if="item.content.music">
+							<meting-js
+								v-if="item.content.music.type === 'tencent'"
+								:id="item.content.music.id"
+								:server="item.content.music.server"
+								:api="item.content.music.api"
+							/>
+						</div>
 
 							<div v-if="item.content.images.length" class="zone_imgbox">
 								<figure

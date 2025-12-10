@@ -7,7 +7,7 @@ import { useArticleFilter, useArticleIndexOptions } from '~/composables/useArtic
 
 const appConfig = useAppConfig()
 useSeoMeta({
-	title: '归档',
+	title: '归档',，     
 	description: `${appConfig.title}的所有文章归档。`,
 })
 const birthYear = appConfig.component.stats.birthYear

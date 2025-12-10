@@ -116,6 +116,7 @@ export default defineAppConfig({
 				{ icon: 'material-symbols:weather-hail-outline', text: '每日天气', url: '/weather' },
 				{ icon: 'typcn:news', text: '60S看世界', url: '/news' },
 				{ icon: 'ant-design:bilibili-outlined', text: 'B站热门', url: '/bilibili' },
+				{ icon: 'mdi:steam', text: 'Steam活动', url: '/steam'},
 				{ icon: 'ri:bilibili-fill', text: '追番', url: '/banguim' },
 				{ icon: 'tabler:user', text: '关于我', url: '/about' },
 			],

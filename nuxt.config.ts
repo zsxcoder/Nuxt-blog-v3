@@ -32,6 +32,17 @@ export default defineNuxtConfig({
 				{ rel: 'stylesheet', href: 'https://fonts.googleapis.cn/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Noto+Sans+SC:wght@100..900&family=Noto+Serif+SC:wght@200..900&display=swap', media: 'print', onload: 'this.media="all"' },
 				// 小米字体 "MiSans"
 				{ rel: 'stylesheet', href: 'https://cdn-font.hyperos.mi.com/font/css?family=MiSans:100,200,300,400,450,500,600,650,700,900:Chinese_Simplify,Latin&display=swap', media: 'print', onload: 'this.media="all"' },
+				// Moments 页面相关的外部资源优化
+				{ rel: 'preconnect', href: 'https://moment-api.mcyzsx.top' },
+				{ rel: 'dns-prefetch', href: 'https://moment-api.mcyzsx.top' },
+				{ rel: 'preconnect', href: 'https://jsd.myxz.top' },
+				{ rel: 'dns-prefetch', href: 'https://jsd.myxz.top' },
+				{
+					rel: 'stylesheet',
+					href: 'https://jsd.myxz.top/npm/aplayer/dist/APlayer.min.css',
+					media: 'print',
+					onload: 'this.media="all"',
+				},
 			],
 			templateParams: {
 				separator: '|',
