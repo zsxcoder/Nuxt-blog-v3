@@ -67,7 +67,7 @@ async function fetchWeather() {
 		error.value = false
 		progress.value = 30
 		const res = await fetch(
-			'https://60s.viki.moe/v2/weather/forecast?days=7&encoding=json&query=南京市',
+			'https://60s.kemeow.top/v2/weather/forecast?days=7&encoding=json&query=%E5%8D%97%E4%BA%AC%E5%B8%82',
 		)
 		if (!res.ok)
 			throw new Error('网络错误')
