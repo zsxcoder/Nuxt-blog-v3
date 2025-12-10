@@ -146,7 +146,7 @@ function navigateToSite() {
 /* 自定义字体定义 */
 @font-face {
   font-family: 'ChillHuoSong_F';
-  src: url('/fonts/ChillHuoSong_F_Regular.woff2') format('woff2');
+  src: url('/fonts/AlimamaFangYuanTi.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
