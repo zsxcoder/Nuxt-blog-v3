@@ -46,7 +46,7 @@ function getInspectStyle(src: string): CSSProperties {
 				<NuxtImg :src="avatar" :title="avatar" :style="getInspectStyle(avatar)" />
 			</ClientOnly>
 
-			<NuxtImg v-else :src="avatar" :alt="author" loading="lazy" :title="feed ? undefined : '无订阅源'" />
+			<NuxtImg v-else class="round-cobblestone" :src="avatar" :alt="author" loading="lazy" :title="feed ? undefined : '无订阅源'" />
 			<Icon v-if="appConfig.link.remindNoFeed && !feed" class="no-feed" name="ph:bell-simple-slash-bold" />
 		</div>
 
@@ -93,10 +93,10 @@ function getInspectStyle(src: string): CSSProperties {
 .feed-card {
 	display: flex;
 	align-items: center;
-	gap: 0.2rem;
+	gap: 0.2em;
 	width: 14em;
-	margin: 1rem auto;
-	padding: 0.5rem;
+	margin: 1em auto;
+	padding: 0.5em;
 	line-height: 1.4;
 	transition: transform 0.2s;
 	animation: float-in 0.2s var(--delay) backwards;
@@ -112,13 +112,13 @@ function getInspectStyle(src: string): CSSProperties {
 
 	.avatar {
 		position: relative;
-		margin: 0 0.5rem 0 0;
+		margin: 0 0.5em 0 0;
 
 		img {
 			display: block;
-			width: 2.5rem;
-			height: 2.5rem;
-			border-radius: 4em;
+			width: 2.5em;
+			height: 2.5em;
+			border-radius: 50%;
 			box-shadow: 2px 4px 0.5em var(--ld-shadow);
 			background-color: white;
 			object-fit: cover;
@@ -157,13 +157,13 @@ function getInspectStyle(src: string): CSSProperties {
 .site-content {
 	display: flex;
 	align-items: center;
-	gap: 0.5rem;
+	gap: 0.5em;
 	padding: 0.5em 1em;
 
 	.site-icon {
 		width: 1.5rem;
 		height: 1.5rem;
-		border-radius: 0.2em;
+		border-radius: 4px;
 		object-fit: contain;
 	}
 
@@ -176,7 +176,7 @@ function getInspectStyle(src: string): CSSProperties {
 		}
 
 		.domain-mark {
-			font-size: 0.4rem;
+			font-size: 0.8em;
 			vertical-align: super;
 		}
 	}

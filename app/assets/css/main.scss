@@ -63,6 +63,11 @@ menu, ol, ul {
 	list-style: none;
 }
 
+mark {
+	background-color: var(--c-primary-soft);
+	color: var(--c-primary);
+}
+
 button {
 	cursor: pointer;
 
@@ -104,9 +109,8 @@ button, input, textarea {
 
 // 图片加载失败 fallback
 img {
-	contain: layout;
+	contain: paint;
 	display: inline-block;
-	overflow: clip; // Firefox
 
 	&::before {
 		position: absolute;

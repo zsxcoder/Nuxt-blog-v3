@@ -3,7 +3,8 @@ import type ArticleProps from '~/types/article'
 import { onClickOutside } from '@vueuse/core'
 import { group } from 'radash'
 
-import { useArticleFilter, useArticleIndexOptions } from '~/composables/useArticle'
+import { useArticleFilter, useArticleIndexOptions, useArticleSort } from '~/composables/useArticle'
+import { getFixedDelay } from '~/utils/anim'
 
 const appConfig = useAppConfig()
 useSeoMeta({
@@ -35,8 +36,11 @@ const listNormalized = computed<ArticleProps[]>(() => {
 	return raw as ArticleProps[]
 })
 
-// 3. 再传给 useArticleFilter
-const { category, categories, tag, tags, listFiltered } = useArticleFilter(listNormalized, {
+// 3. 添加排序功能
+const { sortOrder, isAscending, listSorted } = useArticleSort(listNormalized)
+
+// 4. 再传给 useArticleFilter
+const { category, categories, tag, tags, listFiltered } = useArticleFilter(listSorted, {
 	categoryBindQuery: 'category',
 	tagBindQuery: 'tag',
 })
@@ -168,6 +172,14 @@ onClickOutside(tagDropdownRef, () => {
 
 <template>
 <div class="archive-page">
+	<!-- 排序控制 -->
+	<PostOrderToggle
+		v-model:is-ascending="isAscending"
+		v-model:sort-order="sortOrder"
+		v-model:category="category"
+		:categories
+	/>
+	
 	<!-- 筛选器组 -->
 	<div v-if="(categories && categories.length > 1) || (tags && tags.length > 0)" class="filter-group">
 		<!-- 分类筛选 -->
@@ -241,6 +253,7 @@ onClickOutside(tagDropdownRef, () => {
 			</Transition>
 		</div>
 
+<<<<<<< HEAD
 		<!-- 标签筛选 -->
 		<div v-if="tags && tags.length > 0" ref="tagDropdownRef" class="category-dropdown">
 			<div
@@ -364,7 +377,8 @@ onClickOutside(tagDropdownRef, () => {
 									:key="article.path"
 									v-bind="article"
 									:to="article.path"
-									:style="{ '--delay': `${index * 0.03}s` }"
+									:use-updated="sortOrder === 'updated'"
+									:style="getFixedDelay(index * 0.03)"
 								/>
 							</TransitionGroup>
 						</menu>

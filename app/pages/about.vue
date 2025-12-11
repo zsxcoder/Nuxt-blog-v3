@@ -39,36 +39,42 @@
               class="social-link"
               icon="ph:envelope-simple-bold"
               to="mailto:me@mcyzsx.top"
+              aria-label="发送邮件到 me@mcyzsx.top"
             />
             <ZButton
               v-tip="'QQ'"
               class="social-link"
               icon="ri:qq-line"
               to="https://qm.qq.com/q/Ha1GZQtMgE"
+              aria-label="QQ 联系方式"
             />
             <ZButton
               v-tip="'哔哩哔哩'"
               class="social-link"
               icon="ri:bilibili-fill"
               to="https://space.bilibili.com/3546643173477234"
+              aria-label="哔哩哔哩主页"
             />
             <ZButton
               v-tip="'Telegram'"
               class="social-link"
               icon="ph:telegram-logo-bold"
               to="https://t.me/KemiaoJun"
+              aria-label="Telegram 联系方式"
             />
             <ZButton
               v-tip="'网易云'"
               class="social-link"
               icon="ri:netease-cloud-music-line"
               to="https://music.163.com/#/playlist?id=13681647281"
+              aria-label="网易云音乐播放列表"
             />
             <ZButton
               v-tip="'X'"
               class="social-link"
               icon="ph:x-logo-bold"
               to="https://x.com/kemiao"
+              aria-label="X (Twitter) 主页"
             />
           </div>
         </div>
@@ -113,22 +119,56 @@ layoutStore.setAside(['blog-stats', 'weather', 'blog-tech', 'latest-comments', '
 /* ----------------- 客户端脚本 ----------------- */
 onMounted(async () => {
   if (process.client) {
-    function loadScript(url: string, callback?: () => void) {
+    function loadScript(url: string, callback?: () => void): Promise<void> {
       return new Promise<void>((resolve, reject) => {
-        if (document.querySelector(`script[src="${url}"]`)) { resolve(); return }
+        // 检查脚本是否已加载
+        const existingScript = document.querySelector(`script[src="${url}"]`)
+        if (existingScript) {
+          callback?.()
+          resolve()
+          return
+        }
+
         const script = document.createElement('script')
         script.src = url
         script.type = 'text/javascript'
         script.async = true
-        script.onload = () => { callback?.(); resolve() }
-        script.onerror = reject
+        script.crossOrigin = 'anonymous' // 添加跨域支持
+        
+        script.onload = () => {
+          try {
+            callback?.()
+            resolve()
+          } catch (error) {
+            console.warn(`脚本回调执行失败: ${url}`, error)
+            resolve() // 仍然 resolve，避免阻塞
+          }
+        }
+        
+        script.onerror = (error) => {
+          console.error(`脚本加载失败: ${url}`, error)
+          reject(new Error(`Failed to load script: ${url}`))
+        }
+
+        // 设置超时机制
+        setTimeout(() => {
+          if (!script.onload.called && !script.onerror.called) {
+            console.warn(`脚本加载超时: ${url}`)
+            reject(new Error(`Script load timeout: ${url}`))
+          }
+        }, 10000) // 10秒超时
+
         document.head.appendChild(script)
       })
     }
 
-    loadScript('/js/about.js')
-      .then(() => console.log('友链顶部重要JS加载完毕'))
-      .catch(err => console.error('友链顶部重要JS加载失败', err))
+    try {
+      await loadScript('/js/about.js')
+      console.log('关于页面脚本加载成功')
+    } catch (error) {
+      console.error('关于页面脚本加载失败:', error)
+      // 可以在这里添加备用逻辑或用户提示
+    }
   }
 })
 </script>
@@ -171,7 +211,10 @@ onMounted(async () => {
 
 /* 移动端微调 */
 @media screen and (max-width: 768px) {
-  .social-list { gap: .75rem; }
+  .social-list {
+    gap: 0.75rem;
+  }
+  
   .social-link {
     width: 44px;
     height: 44px;
