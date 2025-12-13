@@ -12,7 +12,7 @@ export default defineAppConfig({
 
 	analytics: {
 		/** Umami 统计数据接口（例如 Cloudflare Worker 提供的聚合 JSON 地址） */
-		umamiStatsApi: 'https://umami-blog-v3.mcyzsx.top/',
+		umamiStatsApi: 'https://umami-api.051531.xyz/',
 	},
 
 	component: {
