@@ -56,7 +56,7 @@ export const creativityData: CreativityData[] = [
 			{
 				name: 'Git',
 				color: '#df5b40',
-				icon: 'https://www.myxz.top/banners/git.webp',
+				icon: 'https://imgbed.mcyzsx.top/file/custom/MwCNwosm.svg',
 			},
 			{
 				name: 'Css',
