@@ -53,11 +53,11 @@ function navigateToArticles() {
 <style scoped>
 .zhilu-header {
   position: relative;
-  padding: 1.5rem;
-  margin: 1rem 0;
+  padding: 1.25rem 1.5rem;
+  margin: 0.75rem 0;
   border-radius: 12px;
   background: linear-gradient(135deg, var(--c-bg-soft) 0%, var(--c-bg-card) 100%);
-  overflow: hidden;
+  overflow: visible;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid var(--c-border);
   cursor: pointer;
@@ -65,6 +65,9 @@ function navigateToArticles() {
   animation: gentleBackgroundShift 20s ease-in-out infinite;
   will-change: transform, box-shadow, background;
   transform: translateZ(0);
+  min-height: 5rem;
+  display: flex;
+  align-items: center;
 }
 
 @keyframes gentleBackgroundShift {
@@ -115,26 +118,6 @@ function navigateToArticles() {
 }
 
 /* Apple风格的动态光点动画 */
-@keyframes floatParticles {
-  0%, 100% {
-    transform: translate(0, 0) scale(1) rotate(0deg);
-    opacity: 0.2;
-  }
-  25% {
-    transform: translate(12px, -10px) scale(1.15) rotate(90deg);
-    opacity: 0.4;
-  }
-  50% {
-    transform: translate(-15px, 8px) scale(0.85) rotate(180deg);
-    opacity: 0.3;
-  }
-  75% {
-    transform: translate(8px, 15px) scale(1.1) rotate(270deg);
-    opacity: 0.5;
-  }
-}
-
-/* 增强的粒子动画效果 */
 @keyframes floatParticles {
   0%, 100% {
     transform: translate(0, 0) scale(1);
@@ -229,14 +212,16 @@ function navigateToArticles() {
   z-index: 2;
   display: flex;
   align-items: center;
-  gap: 1rem; /* 减小头像和文字的距离 */
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
 }
 
 .avatar-container {
   flex-shrink: 0;
   position: relative;
-  width: 4rem;
-  height: 4rem;
+  width: 3.5rem;
+  height: 3.5rem;
   border-radius: 50%;
   overflow: hidden;
   transition: all 0.3s ease;
