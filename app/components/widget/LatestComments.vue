@@ -81,10 +81,10 @@ function formatContent(content: string): string {
 	).trim()
 }
 
-async function fetchComments() {
-	// 如果距离上次获取时间小于10分钟，则使用缓存
+async function fetchComments(force = false) {
+	// 如果距离上次获取时间小于10分钟且不是强制刷新，则使用缓存
 	const now = Date.now()
-	if (now - commentsState.value.lastFetchTime < 10 * 60 * 1000) {
+	if (!force && now - commentsState.value.lastFetchTime < 10 * 60 * 1000) {
 		return
 	}
 
@@ -99,11 +99,11 @@ async function fetchComments() {
 				includeReply: true,
 				pageSize: 10,
 			},
-			timeout: 5000,
+			timeout: 10000, // 增加超时时间
 		})
 
 		if (!response?.data) {
-			throw new Error('No data')
+			throw new Error('No data received from API')
 		}
 
 		commentsState.value.comments = response.data
@@ -120,7 +120,9 @@ async function fetchComments() {
 			}))
 		commentsState.value.lastFetchTime = now
 	}
-	catch {
+	catch (err) {
+		// 添加更详细的错误处理
+		console.error('Failed to fetch latest comments:', err)
 		commentsState.value.error = true
 	}
 	finally {
@@ -130,9 +132,22 @@ async function fetchComments() {
 
 let timer: number | undefined
 
+// 使用 onBeforeMount 替代 onMounted，确保更早地发起请求
+onBeforeMount(() => {
+	// 在服务器端渲染时不执行
+	if (process.client) {
+		fetchComments(true) // 强制首次加载
+	}
+})
+
 onMounted(() => {
-	fetchComments()
-	timer = window.setInterval(fetchComments, 10 * 60 * 1000)
+	// 确保 onBeforeMount 中的请求没有执行（比如 SSR 情况）
+	if (!commentsState.value.comments.length && !commentsState.value.loading) {
+		fetchComments(true)
+	}
+	
+	// 设置定期更新
+	timer = window.setInterval(() => fetchComments(), 10 * 60 * 1000)
 })
 
 onUnmounted(() => {
@@ -160,6 +175,10 @@ onUnmounted(() => {
 			<div v-else-if="error" class="state-box">
 				<Icon name="line-md:alert" class="error-icon" />
 				<span>评论加载失败</span>
+				<button class="retry-btn" @click="fetchComments(true)">
+					<Icon name="ph:arrow-clockwise" />
+					重试
+				</button>
 			</div>
 
 			<!-- 列表 -->
@@ -219,6 +238,27 @@ onUnmounted(() => {
 	.error-icon {
 		font-size: 2rem;
 		color: var(--c-red);
+	}
+	
+	.retry-btn {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		margin-top: 12px;
+		padding: 6px 12px;
+		background: var(--c-bg-soft);
+		border: 1px solid var(--c-border);
+		border-radius: 6px;
+		color: var(--c-text-1);
+		cursor: pointer;
+		font-size: 0.85em;
+		transition: all 0.2s;
+		
+		&:hover {
+			background: var(--c-bg-card);
+			border-color: var(--c-primary);
+			color: var(--c-primary);
+		}
 	}
 }
 
