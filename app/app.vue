@@ -21,6 +21,7 @@ onMounted(() => {
 <BlogSidebar />
 <ClientOnly>
 	<ParticlesBackground />
+	<TestComponent />
 </ClientOnly>
 <div id="content">
 	<main id="main-content">
