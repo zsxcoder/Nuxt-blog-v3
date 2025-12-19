@@ -1,6 +1,9 @@
 <script setup>
 const showPlayer = ref(false)
 
+// 导入组件
+import SimpleParticles from '~/components/util/SimpleParticles.vue'
+
 onMounted(() => {
 	// 确保在客户端显示播放器
 	showPlayer.value = true
@@ -19,10 +22,7 @@ onMounted(() => {
 <NuxtRouteAnnouncer :style="{ position: 'absolute' }" />
 <BlogSkipToContent />
 <BlogSidebar />
-<ClientOnly>
-	<ParticlesBackground />
-	<TestComponent />
-</ClientOnly>
+<SimpleParticles />
 <div id="content">
 	<main id="main-content">
 		<NuxtPage />
