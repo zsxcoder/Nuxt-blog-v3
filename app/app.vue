@@ -19,7 +19,9 @@ onMounted(() => {
 <NuxtRouteAnnouncer :style="{ position: 'absolute' }" />
 <BlogSkipToContent />
 <BlogSidebar />
-<ParticlesBackground />
+<ClientOnly>
+	<ParticlesBackground />
+</ClientOnly>
 <div id="content">
 	<main id="main-content">
 		<NuxtPage />

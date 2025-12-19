@@ -1,8 +1,8 @@
 <template>
   <canvas
     ref="canvasRef"
-    class="fixed top-0 left-0 w-full h-full pointer-events-none transition-opacity duration-1000 z-0"
-    style="z-index: 0"
+    class="fixed top-0 left-0 w-full h-full pointer-events-none"
+    style="z-index: 1; background: rgba(0,0,0,0.1);"
   />
 </template>
 
@@ -12,15 +12,27 @@ import { ref, onMounted, onUnmounted } from 'vue';
 const canvasRef = ref(null);
 
 onMounted(() => {
-  const canvas = canvasRef.value;
-  if (!canvas) return;
+  // 确保在客户端运行
+  if (process.client) {
+    console.log('ParticlesBackground: 初始化粒子效果');
+    
+    const canvas = canvasRef.value;
+    if (!canvas) {
+      console.error('ParticlesBackground: 无法获取 canvas 元素');
+      return;
+    }
 
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      console.error('ParticlesBackground: 无法获取 canvas 上下文');
+      return;
+    }
 
-  let animationFrameId;
-  let particles = [];
-  let isDark = document.documentElement.classList.contains('dark');
+    console.log('ParticlesBackground: 成功获取 canvas 和上下文');
+
+    let animationFrameId;
+    let particles = [];
+    let isDark = document.documentElement.classList.contains('dark');
 
   // Genshin Style Colors - Unified Starry/Magical Feel
   const getColors = (dark) => {
@@ -40,7 +52,7 @@ onMounted(() => {
   };
 
   let colors = getColors(isDark);
-  const particleCount = 35; // Increased count for visibility
+  const particleCount = 50; // Increased count for visibility
 
   const resizeCanvas = () => {
     canvas.width = window.innerWidth;
@@ -57,9 +69,9 @@ onMounted(() => {
       this.y = initial ? Math.random() * canvas.height : canvas.height + 20;
       this.size = Math.random() * 5 + 3; // Slightly larger: 3px to 8px radius
       this.color = colors[Math.floor(Math.random() * colors.length)];
-      this.speedY = Math.random() * -0.5 - 0.1; // Slow upward float
-      this.speedX = (Math.random() - 0.5) * 0.2; // Slight drift
-      this.opacity = 0;
+      this.speedY = Math.random() * -1.0 - 0.5; // Faster upward float
+      this.speedX = (Math.random() - 0.5) * 0.5; // More drift
+      this.opacity = Math.random() * 0.5 + 0.5; // Start with more visible opacity
       this.fadeSpeed = Math.random() * 0.01 + 0.005;
       this.type = Math.random() > 0.7 ? 'star' : 'circle'; // 30% stars
       this.rotation = Math.random() * Math.PI * 2;
@@ -156,11 +168,15 @@ onMounted(() => {
   init();
   animate();
 
+  console.log('ParticlesBackground: 粒子效果已启动');
+
   // Cleanup on unmount
   onUnmounted(() => {
     window.removeEventListener('resize', resizeCanvas);
     cancelAnimationFrame(animationFrameId);
     observer.disconnect();
   });
+  }
+});
 });
 </script>
