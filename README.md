@@ -95,7 +95,7 @@ const basicConfig = {
   title: 'ZSXの小站',           // 网站标题
   subtitle: '造化钟神秀，阴阳割昏晓。', // 网站副标题
   description: '钟神秀的个人博客...',   // 网站描述
-  url: 'https://blog.mcyzsx.top/',    // 网站地址
+  url: 'https://blog.zsxcoder.top/',    // 网站地址
   author: {
     name: '钟神秀',                   // 作者名称
     email: 'me@mcyzsx.top',          // 作者邮箱
