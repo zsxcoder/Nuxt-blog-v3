@@ -8,7 +8,7 @@ export default [
 			{
 				author: '纸鹿本鹿',
 				sitenick: '纸鹿摸鱼处',
-				desc: '纸鹿至麓不知路，支炉制露不止漉纸鹿至麓不知路，支炉制露不止漉',
+				desc: '纸鹿至麓不知路，支炉制露不止漉',
 				link: 'https://blog.zhilu.site/',
 				avatar: 'https://cdn.jsdelivr.net/gh/mcyzsx/picx-images-hosting@master/links/image.8ok4l9tqge.webp',
 				date: '2025-09-03',
