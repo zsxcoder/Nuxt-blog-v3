@@ -50,7 +50,7 @@ onMounted(() => {
 
 <!-- eslint-disable-next-line vue/enforce-style-attribute -->
 <style lang="scss">
-#z-root {
+#blog-root {
 	display: flex;
 	justify-content: center;
 	gap: 1rem;

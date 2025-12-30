@@ -51,7 +51,7 @@ export default defineNuxtConfig({
 			script: blogConfig.scripts,
 		},
 		rootAttrs: {
-			id: 'z-root',
+			id: 'blog-root',
 		},
 	},
 
@@ -170,6 +170,7 @@ export default defineNuxtConfig({
 				// @keep-sorted
 				rehypePlugins: {
 					'rehype-katex': {},
+					'rehype-meta-slots': {},
 				},
 				toc: { depth: 4, searchDepth: 4 },
 			},
