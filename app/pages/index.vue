@@ -10,7 +10,7 @@ useSeoMeta({
 })
 
 const layoutStore = useLayoutStore()
-layoutStore.setAside(['blog-stats', 'blog-tech', 'announcement-card', 'work-status', 'latest-comments', 'comm-group', 'history-today', 'poetry'])
+layoutStore.setAside(['blog-stats', 'blog-tech', 'userinfo', 'work-status', 'latest-comments', 'comm-group', 'history-today', 'poetry'])
 
 const articleIndexPath = 'posts/%'
 const articleIndexKey = `idx_${articleIndexPath.replace(/[^a-z0-9]/gi, '_')}`

@@ -83,7 +83,7 @@
     "oxc-minify": "catalog:util",
     "p-limit": "catalog:util",
     "rehype-katex": "catalog:content",
-    "rehype-meta-slots": "workspace:",
+    "rehype-meta-slots": "workspace:^",
     "remark-math": "catalog:content",
     "remark-music": "workspace:",
     "remark-reading-time": "catalog:content",
