@@ -28,7 +28,7 @@ const basicConfig = {
 	timeEstablished: '2025-11-28',
 	timeStart: '2025',
 	timezone: 'Asia/Shanghai',
-	url: 'https://blog.zsxcoder.top/',
+	url: 'https://blog.zsxcoder.top',
 	defaultCategory: '未分类',
 }
 
@@ -50,6 +50,7 @@ const blogConfig = {
 			生活: { icon: 'ph:shooting-star-bold', color: '#f77' },
 			资源分享: { icon: 'mdi:web', color: '#24d' },
 			技术分享: { icon: 'ph:code-bold', color: '#77f' },
+			总结: { icon: 'ph:book-open-bold', color: '#f77' },
 		},
 		defaultCategoryIcon: 'ph:folder-bold',
 		defaultTagIcon: 'ph:tag-bold',
@@ -66,6 +67,7 @@ const blogConfig = {
 			网站推荐: { icon: 'mdi:web', color: '#FF5722' }, // 深橙色 - 网站推荐品牌色
 			博客: { icon: 'fa7-solid:blog', color: '#673AB7' }, // 深紫色 - 博客品牌色
 			网站统计: { icon: 'mdi:chart-bar', color: '#00BCD4' }, // 蓝绿色 - 网站统计品牌色
+			总结: { icon: 'mdi:book-open-outline', color: '#FFC107' },
 			其他: { icon: 'mdi:file-document-box', color: '#FFEB3B' }, // 黄色 - 其他品牌色
 		},
 		/** 文章版式，首个为默认版式 */

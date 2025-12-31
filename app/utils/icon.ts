@@ -62,6 +62,7 @@ const mainDomainIcons: Record<string, string> = {
 	'netlify.app': 'simple-icons:netlify',
 	'pages.dev': 'simple-icons:cloudflare',
 	'qq.com': 'ri:qq-fill',
+	't.me': 'ri:telegram-fill',
 	'thisis.host': 'ph:star-four-fill',
 	'v2ex.com': 'simple-icons:v2ex',
 	'vercel.app': 'simple-icons:vercel',

@@ -72,7 +72,7 @@ export default defineAppConfig({
 			{
 				title: '社交',
 				items: [
-					{ icon: 'ph:github-logo-bold', text: 'mcyzsx', url: 'https://github.com/zsxcoder' },
+					{ icon: 'ph:github-logo-bold', text: 'zsxcoder', url: 'https://github.com/zsxcoder' },
 					{ icon: 'ri:qq-line', text: 'Q: 3149261770', url: 'https://qm.qq.com/q/Ha1GZQtMgE' },
 					{ icon: 'ph:envelope-simple-bold', text: blogConfig.author.email, url: `mailto:${blogConfig.author.email}` },
 				],
@@ -115,8 +115,8 @@ export default defineAppConfig({
 				{ icon: 'ph:archive-bold', text: '归档', url: '/archive' },
 				{ icon: 'ph:link-bold', text: '友链', url: '/link' },
 				{ icon: 'mdi:wechat', text: '朋友圈', url: '/fcircle' },
-            { icon: 'mdi:pen', text: '即刻短文', url: '/essay' },
-             { icon: 'mdi:mastodon', text: '嘟文', url: '/mastodon' },
+				{ icon: 'mdi:pen', text: '即刻短文', url: '/essay' },
+				{ icon: 'mdi:mastodon', text: '嘟文', url: '/mastodon' },
 				{ icon: 'ph:devices-bold', text: '装备', url: '/devices' },
 				{ icon: 'icon-park-twotone:message', text: '留言板', url: '/message' },
 				{ icon: 'material-symbols:weather-hail-outline', text: '每日天气', url: '/weather' },
